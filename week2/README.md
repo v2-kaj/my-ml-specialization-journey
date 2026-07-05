@@ -40,3 +40,18 @@ fwb(x) = g(w^T x + b) where w and x are vectors and b is a scalar.
 Thus z = w^T x + b
 
 Given this, we can predict categories between 0 and 1.
+
+COST FUNCTION FOR LOGISTIC REGRESSION
+
+Recall that a cost function give us a mesure of how well our set of parameters (w and b) are performing. In other words, it tells us how well our model is fitting the training data.
+
+As you can recall that in linear regression, we used the mean squared error (MSE) as our cost function. But in logistic regression, we use a different cost function because the MSE cost function is not suitable for logistic regression.
+
+our MSE cost function for logistic regression is:
+jwb =  1/2m * Σ(i=1 to m) (fwb(x^(i)) - y^(i))^2
+
+where fwb(x^(i)) = w^T x^(i) + b is the predicted value and y^(i) is the actual value in our training set.
+
+
+
+
