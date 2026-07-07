@@ -40,7 +40,7 @@ Given this, we can predict categories between 0 and 1 using the logistic functio
 
 COST FUNCTION FOR LOGISTIC REGRESSION
 
-Recall that a cost function give us a mesure of how well our set of parameters (w and b) are performing. In other words, it tells us how well our model is fitting the training data.
+Recall that a cost function gives us a mesure of how well our set of parameters (w and b) are performing. In other words, it tells us how well our model is fitting the training data.
 
 As you can recall that in linear regression, we used the mean squared error (MSE) as our cost function. But in logistic regression, we use a different cost function because the MSE cost function is not suitable for logistic regression.
 
@@ -79,7 +79,7 @@ compute cost(X,y,w,b):
 To test this we can compute the cost for a given set of parameters w and b. say w = [0, 0] and b = 0 for a cost of say 0.443
 if you choose another set of parameters say w = [1, 1] and b = 1 for a cost of say 0.234 you can see visually that the decision boundary line would be better for a choice of the latter as your set of parameters. This shows that the cost function is a good measure of how well our model is performing.
 
-Now to calculate gradient descent for the logistic function:
+Now to calculate gradient for the logistic function:
 
 djdw = 1/m * Σ(i=1 to m) (fwb(x^(i)) - y^(i)) * xj^(i)
 
@@ -89,7 +89,7 @@ and logistic regression becomes:
 repeat until convergence:
 wj = wj - α * djdw
 bj = bj - α * djdb
-permforming simultaneous update ofcours.
+performing simultaneous update of course.
 
 so in pseudo code
 compute gradient for logistic(X, y, w, b):
@@ -196,6 +196,23 @@ is djdb = 1/m * sum((fw(x^(i)) - y^(i)))
 And the regularized cosst function w.r.t b is 
 djdb = 1/m * sum((fw(x^(i)) - y^(i))) remember we are not trying to reguralize b that's why we don't have the regularization term here.
 
+Pseudo cost for regularized linear regression:
+reg-cost-lr(X, y, w, b, lambda = 1):
+    m = shape(X)[0]
+    n = len(w)
+    cost = 0
+    for i in range(m):
+        jwb = ((w.dot(X[i]) + b) - y[i])**2
+        cost = cost + jwb
+    cost = 1/(2 * m) * cost
+    # the regularization term
+    regCost = 0
+    for j in range(n):
+        regCost = regCost + w[j]**2
+    regCost = (lambda / (2 * m)) * regCost
+    cost = cost + regCost
+    return cost
+
 NEXT Let's see how to apply regularization to reduce overfitting in logistic regression.
 
 We have seen that if we train logistic regression on high degree polynomials, we get overfitting. In this case we end up with a decisition boundary that is too complex and overfits the data.
@@ -206,7 +223,26 @@ jwb = -1/m * sum(y^(i) * log(fw(x^(i))) + (1 - y^(i)) * log(1 - fw(x^(i)))) for 
 The regularized cost function for logistic regression is given by:
 jwb = -1/m * sum(y^(i) * log(fw(x^(i))) + (1 - y^(i)) * log(1 - fw(x^(i)))) + lambda/2m * sum(wj^2) for i is from 1 to m where m is the number of training examples and j is from 1 to n where n is the number of features.
 
+Now pseudo impleemtation of the regularized cost function for logistic regression:
 
+reg-cost-logistic(X, w, b, lambda = 1):
+    m = shape(X)[0]
+    n = len(w)
+    cost = 0
+    for i in range(m):
+        zi = np.dot(w, X[i]) + b
+        fwbx = 1/(1 + np.exp(-zi))
+        jwb = -y[i] * np.log(fwbx) - (1 - y[i]) * np.log(1 - fwbx)
+        cost = cost + jwb
+    cost = 1/m * cost
+
+    # the regularization term
+    regCost = 0
+    for j in range(n):
+        regCost = regCost + w[j]**2
+    regCost = (lambda / (2 * m)) * regCost
+    cost = cost + regCost
+    return cost
 
 
 
