@@ -140,6 +140,82 @@ compute gradient descent for logistic(X,y,win,bin,alpha,num_iters):
         b = b - alpha * djdb
     return w, b, cost
 
+Learning algorithms.
+Linear and Logistic Regression are both supervised learning algorithms.
+
+Underfitting Problem :
+The model is not complex enough to capture the underlying pattern in the data. AKA the algorithm has high bias. The model for example has a misconception that the housing pricing will fit the data linearly as housing size increases.
+This can happen when we have too few features resulting in a simple model.
+
+Overfitting Problem:
+The model is too complex and captures the noise in the data such that it extremely fits the training data but fails to generalize to unseen data. AKA the algorithm has high variance.  
+
+This can happen when you have too many features resulting in a complex model.
+
+You want the model to generalize well to unseen data.
+
+Reducing Overfitting using Regularization
+One way to correct overfitting is to collect more examples. Sometimes this is not feasible.
+The second way is to reduce the number of features. The goal is to select only the most relevant features. ie feature selection.
+
+The third way is to use regularization. 
+The goal is to shrink the values of parameters without necessarily setting them to zero which causes those features to have less impact on the model. We only do this for the params wj to wn and regularizing b does not have a significant effect.
+
+How to apply Regularization.
+We can add lambad * the sum of all w squared from from wj to wn and devide by 2m where m is the number of training examples to the cost function.
+
+The new cost funtion, j becomes
+jwb = 1/2m * sum((fw(x^(i)) - y^(i))^2) + lambda/2m * sum(wj^2)
+
+lambda/2m * sum(wj^2) is the regularization term.
+
+The modified cost function tries to trade off two goals:
+1. Minimize the first term (the original cost function)
+2. Minimize the regularization term keepin the values of wj smaller
+
+The value of the lambda choosen specifies the relative importance of how you balance between the two goals.
+If the value of lambda is very large, you are prioritizing the regularization term, and the model will choose the values of wj that are very small. The model will underfits.
+
+If lambda is too small the model underfits.
+
+So what you wnat to is to choose a just right value of the lambda.
+
+
+NEXT Lets see how to apply regularization to reduce overfitting in linear regression.
+
+Recall that the cost jwb is given by 1/2m * sum((fw(x^(i)) - y^(i))^2)
+and that the change in cost ie partial derivative of the cost w.r.t w
+is given by djdw = 1/m * sum((fw(x^(i)) - y^(i)) * xj^(i))
+
+With regularization, the change in cost ie partial derivative of the cost w.r.t w
+is given djdw = 1/m * sum((fw(x^(i)) - y^(i)) * xj^(i)) + lambda/m * wj
+
+The partial derivative of the cost function w.r.t b
+is djdb = 1/m * sum((fw(x^(i)) - y^(i)))
+
+And the regularized cosst function w.r.t b is 
+djdb = 1/m * sum((fw(x^(i)) - y^(i))) remember we are not trying to reguralize b that's why we don't have the regularization term here.
+
+NEXT Let's see how to apply regularization to reduce overfitting in logistic regression.
+
+We have seen that if we train logistic regression on high degree polynomials, we get overfitting. In this case we end up with a decisition boundary that is too complex and overfits the data.
+
+Recall that the cost function for logistic regression is given by:
+jwb = -1/m * sum(y^(i) * log(fw(x^(i))) + (1 - y^(i)) * log(1 - fw(x^(i)))) for i is from 1 to m where m is the number of training examples.
+
+The regularized cost function for logistic regression is given by:
+jwb = -1/m * sum(y^(i) * log(fw(x^(i))) + (1 - y^(i)) * log(1 - fw(x^(i)))) + lambda/2m * sum(wj^2) for i is from 1 to m where m is the number of training examples and j is from 1 to n where n is the number of features.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
