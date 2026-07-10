@@ -11,6 +11,16 @@ In classification problem, our goal is to predict a discrete label (0 or 1, true
 Logistic Regression.
 It turns out that linear regression is not suitable for classification problems as it can produce values outside the range [0, 1].
 
+repeat until converge:{
+    w = w - alpha * (djdw ie the partial derivative of the cost function w.r.t w)
+    b = b - alpha * (djdb ie the partial derivative of the cost function w.r.t b)
+}
+Recall that djdw = 1/m * Σ(i=1 to m)((fwb(x^(i)) - y^(i)) * x^(i))
+Recall that djdb = 1/m * Σ(i=1 to m)(fwb(x^(i)) - y^(i))
+
+Now this is exactly like linear regression. The difference is in fwb(x^(i)) is now 1/1+ e^(-(wx + b)) We call wx + b to be z.
+As you'll see below another difference is how we calculate the cost function.
+
 Lets build up to logistic regression step by step.
 
 There's a mathematical function called the sigmoid function that can map any real number z to the range [0, 1].
