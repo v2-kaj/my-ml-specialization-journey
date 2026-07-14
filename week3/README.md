@@ -10,14 +10,12 @@ With increasing amount of data linear and logistic performances didnt improve mu
 
 Now lets look at NN using demand prediction example.
 
-Layer - a grouping of neurons (units) that take as input a set of features represented as a vector. Can have one or more neurons
+Layer - a grouping of neurons (units) that take as input a set of features represented as a vector. A layer can have one or more neurons
 The output layer - outputs the final prediction of the neural network
 
-Activattion - a degree that neuron sends high output values or many values to other neurons
+Activation - a degree that neuron sends high output values or many values to other neurons
 
-Input layer is a list of inputs into a neural network also referred to as layer 0 or the network.
-
-In a neural network, each layer is a vector and inputs into another layer which in turn outputs a vector which is then an input into another layer and so on and so fourth up to the output layer which outputs the final prediction.
+Input layer is a vector of inputs into a neural network also referred to as layer 0 or the network.
 
 Each neuron receives features encoded as a vector of numbers. The neuron then assigns weights to each feature. The neuron then calculates the weighted sum of the features by multiplying each feature by its weight. It then adds a bias term to the sum. This sum now becomes the neuron's input. The neuron then applies an activation function on this neuron's input to determine if the neuron should be activated or not. The main role of the activation function is to introduce non-linearity into the model allowing the network to learn more complex patterns in the data beyond simple linear combinations.
 
@@ -27,7 +25,7 @@ The output of each layer is passed through an activation function to determine i
 
 Neural Network can learn the most important features on its own to ouput a more likely output. In logistic regression or linear regression, we do manual feature engineering but NN do this on their own.
 
-The number of hidden layers, and the number of neurons (units) in each layer defines the architecture of the neural network. This does have impact on the performance of the NN.
+The number of hidden layers, and the number of neurons (units) in each layer defines the architecture of the neural network. This does have a bearing on the performance of the NN.
 
 Multi layer perceptron is a type of neural network that has multiple layers of neurons.
 
@@ -84,4 +82,21 @@ Note that weights and biases are learned during training and passed here for for
 As an example we can now say:
 
 yhat = (my_predict(X, W1, b1, W2, b2, W3, b3)>0.5).astype(int) to output [0, 0, 1, 0, 1]
-for example as out put predictions for each sample in the dataset X.
+for example as output predictions for each sample in the dataset X.
+
+AGI
+ANI Artificial Narrow Inteligence.. does one thing.
+AGI can do anything as a human can.
+
+VECTORIZED IMPLEMENTATION for Forward Prop
+
+X = np.array([[200, 101]])
+W = np.array([[1, -3, ], [-2, 4, -7]])
+B = np.array([-1, 1 ,1])
+
+def dense(Ain, W, B):
+    z = np.mutmul(Ain, W) + B
+    Aout = g(z)
+    return Aout
+
+Ain, W, B are all Matrices ie 2D array.
