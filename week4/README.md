@@ -52,3 +52,21 @@ model.compile(loss=SparseCategoricalCrossentropy())
 model.fit(X,Y, epochs=100) 
 
 /// now lets see the reommended version in Tensor Flow
+
+For softmax it turns out that the more accurate algo
+is 
+mode = Sequential(
+    Dense(unit=23,activation='relu')
+    Dense(units=2, activation='relu')
+    Dense(units=1, activation='linear') # instead of softmax
+)
+
+model.compile(loss=SparseCategorixalCrossentropy(fromlogits=true)) #computationally more accureate
+
+now the NN output layer outputs z1, z2, z3 etc. To get the ac
+so logit = model(X)
+fx = tf.nn.sigmoid(logit)
+
+Multilabel Classification
+
+
