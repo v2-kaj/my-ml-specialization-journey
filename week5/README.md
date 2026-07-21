@@ -1,6 +1,6 @@
 Multiclass Classification.
 
-Recall that Logistic Regression applies when y can take on two possible values. Thus we use Logistic regression to solve binary classification problems.
+Recall that Logistic Regression applies when y can take on only two possible values. Thus we use Logistic regression to solve binary classification problems.
 
 In logistic regression we compute the probability that y = 1 given x. P(y=1|x) as follows:
 
@@ -36,7 +36,7 @@ a4 is the probability that y = 4 given input features x.
 
 Now for the general case where y can be 1,2,3,...,N
 
-zj = Wj^T * X + bj for j = 1, 2, 3, ..., N
+zj = Wj^T * X + bj for j = 1, 2, 3,..., N
 parameters are w1, w2, ..., wN and b1, b2, ..., bN
 
 and;
@@ -69,8 +69,35 @@ Loss(a1,...aN, y) = {
 }
 
 Now let's see how softmax is used in Neural Networks to solve multiclass classification problems.
+
 Neural Network with softmax output.
+To solve multiclass classification problems, we can use a neural network with a softmax output layer.
 
+model = Sequential(
+    Dense(128, activation='relu', input_shape=(784,)),
+    Dense(64, activation='relu'),
+    Dense(10, activation='softmax')
+)
+model.compile(loss='sparse_categorical_crossentropy')
+model.fit(X, Y, epochs=100)
 
+But a more accurate version is:
+
+model = Sequential([
+    Dense(128, activation='relu', input_shape=(784,)),
+    Dense(64, activation='relu'),
+    Dense(10, activation='linear')
+])
+
+model.compile(loss=BinaryCrossentropy(from_logits=True))
+model.fit(X,Y,epochs=100)
+
+With this code the model doesnt output the probabilities. Instead it outputs z values (logits) which are the raw outputs of the network before applying the softmax function.
+
+To get the probabilities, we need to apply the softmax function to the outputs of the network.
+logit = model(X)
+so fx = tf.nn.sigmoid(logit)
+
+Next, I explore the Multiclass Classification lab.
 
 
