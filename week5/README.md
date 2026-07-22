@@ -1,6 +1,6 @@
 Multiclass Classification.
 
-Recall that Logistic Regression applies when y can take on only two possible values. Thus we use Logistic regression to solve binary classification problems.
+Recall that Logistic Regression applies when y can take on one of only two possible values. Thus we use Logistic regression to solve binary classification problems.
 
 In logistic regression we compute the probability that y = 1 given x. P(y=1|x) as follows:
 
@@ -100,4 +100,14 @@ so fx = tf.nn.sigmoid(logit)
 
 Next, I explore the Multiclass Classification lab.
 
+Adaptive Moment Estimation (Adam) Optimization Algorithm
+
+Doesnt use a constant learning rate alpha, instead it adjusts the learning rate for faster learning.
+For instance if the gradient is small, it increases the learning rate, and if the gradient is large, it decreases the learning rate.
+
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001), loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True))
+ 
+Other types of Layers
+Convolutional Layer - units do not receive as inputs all the input features instead each unit only looks at a subset of the input features.
+CNN can learn much faster and require fewer examples. They are also less prone to overfitting.
 
