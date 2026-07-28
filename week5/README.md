@@ -67,6 +67,7 @@ Loss(a1,...aN, y) = {
     -loga2 if y=2,
     ...
 }
+The loss is calculated only for the predicted class.
 
 Now let's see how softmax is used in Neural Networks to solve multiclass classification problems.
 
@@ -108,6 +109,7 @@ For instance if the gradient is small, it increases the learning rate, and if th
 model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001), loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True))
  
 Other types of Layers
-Convolutional Layer - units do not receive as inputs all the input features instead each unit only looks at a subset of the input features.
+Convolutional Layer - units do not receive as inputs from all the input features instead each unit only looks at a subset of the input features.
 CNN can learn much faster and require fewer examples. They are also less prone to overfitting.
+
 
