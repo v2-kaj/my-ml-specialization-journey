@@ -14,7 +14,18 @@ for b = 1 to B:
 B = the number of trees in the ensemble
 This is known as bagged decision tree algorithm.
 
-y^​=majority vote for classification problems and y^​=B1​b=1∑B​fb​(x) for regression problems
+\[
+\hat{y} = \text{majority vote of the trees' predictions}
+\]
+
+for classification problems, and
+
+\[
+\hat{y} = \frac{1}{B}\sum_{b=1}^{B} f_b(x)
+\]
+
+for regression problems.
+
 
 There is one modification of this bagged decision tree algorithm to get an improved algorithm called Random forest. In random forest algorithm, at each split point only an randomly selected  subset of the features is considered as candidate features for spliting. This helps to reducec correlation among the trees.
 
