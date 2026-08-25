@@ -15,4 +15,9 @@ etc
 
 K-means Clustering Algorithm
 
-Randomly initialize k cluster centroids; mu1, mu2, mu3,..., muk where mun are vectors that have the same dimensions as the training data.
+Randomly initialize k cluster centroids; mu1, mu2, mu3,..., muk where mun are vectors that have the same dimensions as the training data. 
+Repeat {
+    # Assign the data points to the the closest cluster centroid
+    for i = 1 to m:
+        
+}
