@@ -33,7 +33,6 @@ def select_threshold(y_val, p_val):
         
         F1 = (2 * prec * rec) / (prec + rec) if (prec + rec) > 0 else 0
         
-        
         if F1 > best_F1:
             best_F1 = F1
             best_epsilon = epsilon
