@@ -29,17 +29,17 @@ Implementing Content-Based filtering
 
 A good way to develop CBF algorithm is to use Deep Learning.
 
-Given feature vector describing a user eg age, gender, location etc we have to computer a vector Vu. similary give a vector describing a movie eg genre, stars in the movie, year  we have to compute a vector Vm.
+Given feature vector describing a user eg age, gender, location etc we have to compute a vector Vu. similary given a vector describing a movie eg genre, stars in the movie, year  we have to compute a vector Vm.
 
 In order to computer Vu, the user network.
 the user network takes Xu List of user features eg  alist (age,gender,location) using afew dense layer it will output Vu that describes the user.
-The output layer has 32 Units ie Vu is a list of 32 numbers unlike most output layers that has 2 or 3 units.
+The output layer has 32 Units ie Vu is a list of 32 numbers unlike most output layers that have 2 or 3 units.
 
-Similarly to computer Vm we can have a movie layer, features of the movie as input layer and the network outputs say 32 units. the output layer of the movie and output layer of the user network have to have the same dimensions hence 32 units and then 32 units. Hypothetically, the user network and the movie network can have different numbers of hidden layers or even units in the layers.
+Similarly to comput Vm we can have a movie network, features of the movie as input layer and the network outputs say 32 units. the output layer of the movie and output layer of the user network have to have the same dimensions hence 32 units and then 32 units. Hypothetically, the user network and the movie network can have different numbers of hidden layers or units in the layers.
  
 Prediction will be Vu dot product Vm. This is to predict the rating of the user on the movie. 
 
-If the user liked/favorite an item, to predict whether the user will like the item, we can modify the algorithm by applying the sigmoid function g(Vu dot product Vm) ie to predict the probability that y(i,j) is 1 (probability that a user will like the item.)
+If the user liked/favorite an item, to predict whether the user will like/favorite the item, we can modify the algorithm by applying the sigmoid function g(Vu dot product Vm) ie to predict the probability that y(i,j) is 1 (probability that a user will like the item.)
 
 Cost function J = Sum(Vuj.Vmi - yij)squared + NN regularization term
 
@@ -51,7 +51,7 @@ Vmi is a vector of lenth 32 that describes movie i with features xmi.
 
 Now what if you wanted to find movies similar to movie i
 
-Well Vmi describes the features of movie i, then we can || Vmk - Vmi|| squared is small. This can be precomputed eg run a server overnight to compute similar items.
+Well Vmi describes the features of movie i, then we can || Vmk - Vmi|| squared is small. This can be pre-computed eg run a server overnight to compute similar items.
 
 One of the advantages of using a NN is that it is easier to put together several neural networks to work together to build a larger system. And this is an axample of this implementation.
 
@@ -61,7 +61,7 @@ Todays recommender system often need to pick out a handful of items to recommend
 
 Many recommender systems are created as two steps.
 Retrieval and Ranking steps.
-Retrieval - Generate a large list of plausible item candidates.
+Retrieval - Generates a large list of plausible item candidates.
     For each of the last 10 movies watched by the user find 10 most similar movies
 
     for most viewed 3 genres find the top 10 movies
@@ -75,9 +75,47 @@ display ranked items to a user.
 
 How many items should we retrieve?
 Retrieving more items results in better perfomance but slower recommmendations
-To analyze/optimize the trade off carry out offline experiments to see if retrieving additional items results in more relevant recommendations p(yij) = 1 of items displayed to the user
+To analyze/optimize the trade off, carry out offline experiments to see if retrieving additional items results in more relevant recommendations p(yij) = 1 of items displayed to the user.
 
 Next: TF Implementation of colaborative filtering.
+
+
+num_outputs = 32
+
+tf.random.set_seed(1)
+user_NN = tf.keras.models.Sequential([
+    ### START CODE HERE ### 
+    tf.keras.layers.Dense(256, activation='relu'),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(num_outputs)  
+    ### END CODE HERE ###  
+])
+
+item_NN = tf.keras.models.Sequential([
+    ### START CODE HERE ###     
+    tf.keras.layers.Dense(256, activation='relu'),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(num_outputs)
+    ### END CODE HERE ###  
+])
+
+# create the user input and point to the base network
+input_user = tf.keras.layers.Input(shape=(num_user_features))
+vu = user_NN(input_user)
+vu = tf.linalg.l2_normalize(vu, axis=1)
+
+# create the item input and point to the base network
+input_item = tf.keras.layers.Input(shape=(num_item_features))
+vm = item_NN(input_item)
+vm = tf.linalg.l2_normalize(vm, axis=1)
+
+# compute the dot product of the two vectors vu and vm
+output = tf.keras.layers.Dot(axes=1)([vu, vm])
+
+# specify the inputs and output of the model
+model = tf.keras.Model([input_user, input_item], output)
+
+model.summary()
 
 
 
