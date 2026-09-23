@@ -1,9 +1,9 @@
 Nxt is Reinforcement Learning.
-In ML, reinforcement learning is one of the pilars of ML despite being not being widely applied in commercial application.
+In ML, reinforcement learning is one of the pilars of ML despite being not being widely applied in commercial applications.
 
 State x, action y
 
-reward function - if the helicopter is flying well give it a reward of +1 or -1000 if it is not doing so good.
+Reward function - if the helicopter is flying well give it a reward of +1 or -1000 if it is not doing so good.
 
 Applications of reinforcement learning.
 1. Controlling robots
@@ -11,14 +11,14 @@ Applications of reinforcement learning.
 3. Financial (stock) trading
 4. Playing games (including video games)
 
-Reinforcement learning - rather than you explicitely telling the algorith this is the correct oupt y for evry single input. All you have to do instead is specify a reward function that tells it when its doing well or badly and the algoithm to figure out how to chooses the right actions. 
+Reinforcement learning - rather than you explicitely telling the algorithm this is the correct oupt y for every single input. All you have to do instead is specify a reward function that tells it when it's doing well or badly and the algoithm to figure out how to chooses the right actions. 
 
-The position of an object is called the state. An env can have several states. 
+The position of an object is called the state. An environment can have several states. 
 We control the robot by providing rewards in different states. eg state 6 given a reward on 100 and state 2 may be a state of 40.
 
 Terminal state - the final state of an object.
 
-At any point the robot is in some state s, choose an action a, and gets enjoys r(s), s')
+At any point the robot is in some state s, choose an action a, and gets enjoys a reward for being in state s r(s),  end up in a new state s'.
 
 How do you know if a set of reward is better than the other?
 
@@ -28,6 +28,50 @@ Lets call the discount factor gamma r
 
 So to generalize we have R1 + r*R2 + r^2*R3 + r^3*R4. The r has the effect of making the reinforceent abit impatient. since it gives full credit to the first reward. and gives less credit to the second and less and less/..
 
-For most rla, the r is a number closer to one eg 0.9 or 0.5 Its like a time value of money. or the interest rate. The returns depends on the rewards and the rewards depend on the actions.
+For most reinforcement learning algorithm, the r is a number closer to one eg 0.9 or 0.5 It's like a time value of money. or the interest rate. The returns depends on the rewards and the rewards depend on the actions.
 
 
+# The state-action value function definition Q
+
+Q is a function of s and a action you can take in that state.
+
+Returns the return eg Q(s, >) = 0 + (0.5)* 0 + (0.5^2)*0 + (0.5^3)*100 = 12.5
+Another example Q(s, <) = 0  + (0.5)*100 = 50
+Q(4,<) = 0 + (0.5)*0 + (0.5^2)*0 + (0.5^3)*100 = 12.5
+
+Because the state value action function is denoted with Q. It is also called the Q function or the optimal Q function or the Q*.
+
+The best possible return from state s is the maxQ(s,a)
+The best possible action in state s is the action a that gives max Q(s,a)
+
+Increasing the discount factor to say closer to 1 eg 0.9 makes the mars rover less impatient. 
+
+Lowering the discount factor makes the alg incredibly impatient.
+
+Bellman equation
+
+Q(s,a) = Return if you
+        . start in state s
+        . take action a (once)
+        . then behave optimally
+
+s: current state
+R(s): reward of the current state
+a: current action
+s': state that you get to after taking action a
+a': action that you might take in state s'
+
+The bellman equation
+
+Q(s,a) = R(s) + r*max(Q(s',a))
+
+The goal of reinforcement learning is 
+Choose a policy pi(s) = a that will tell us what action a to take in state s so as to maximise the expected return. 
+
+Bellman Equation: Q(s,a) = R(s) + r max Q(s',a')
+
+For a stochastic reinforcement problem:
+Bellman Equation: Q(s,a) = R(s) + r E[max Q(s',a')]
+
+
+NEXT: Continous space
